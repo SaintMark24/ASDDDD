@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+char bil[] = {'0','1','3','4','5','6','7','8','9'};
+
+#define Nil 0
+#define MaxEl 100
+#define TOP(S) (S).TOP
+#define InfoTop(S) (S).Data[(S).TOP]
+
+
+typedef char infotype;
+typedef int address;
+typedef struct {
+	infotype Data[MaxEl+1];
+	address TOP;
+} stack;
+
+void CreateEmpty(stack *S) {
+	TOP(*S) = Nil;
+}
+bool IsEmpty(stack S) {
+	return (TOP(S) == Nil);
+}
+bool IsFull(stack S) {
+	return (TOP(S) == MaxEl);
+}
+int Push(stack *S, infotype X) {
+	if (!IsFull(*S)) {
+		TOP(*S)++;
+		InfoTop(*S) = X;
+	} else {
+		cout << "Stack Penuh";
+	}
+	return TOP(*S);
+}
+int Pop(stack *S, infotype *X) {
+	if (!IsEmpty(*S)) {
+		*X = InfoTop(*S);
+		TOP(*S)--;
+	} else {
+		cout << "Stack Kosong";
+	}
+	return TOP(*S);
+}
+/*#define TOP(S) (S).TOP
+#define InfoTop(S) (S).Data[(S).TOP]*/
+
+int main()
+{
+	stack DataTest;
+	stack temp;
+	infotype DataHapus;
+	
+	int n;
+	string x;
+	
+	CreateEmpty(&DataTest);
+	CreateEmpty(&temp);
+	
+	cin >> n;
+	for (int i=0; i<n; i++)
+	{
+		cin >> x;
+		for (int j=0; j<x.length(); j++)
+		{
+			for (int k=0; k<10; k++)
+			{
+				if(x[j]==bil[k])
+				{
+					Push(&DataTest,x[j] );
+				}
+			}
+			if (x[j]=='_')
+			{
+				Pop(&DataTest, &DataHapus);
+			}
+		}
+		while (!IsEmpty(DataTest)) {
+			Pop(&DataTest, &DataHapus);
+			cout << DataHapus << " ";
+		}
+		cout<< endl;
+	}
+	
+	
+	
+	
+	
+	return 0;
+}
